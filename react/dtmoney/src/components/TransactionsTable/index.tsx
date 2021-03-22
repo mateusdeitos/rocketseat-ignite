@@ -1,7 +1,15 @@
+import { useEffect, useState } from "react"
+import { api } from "../../services/api";
 import { Container } from "./styles"
 
 
 export const TransactionsTable = () => {
+    const [transactions, setTransactions] = useState([]);
+    useEffect(() => {
+        api.get('http://localhost:3000')
+            .then(response => setTransactions(response.data));
+    }, [])
+
     return (
         <Container>
             <table>
