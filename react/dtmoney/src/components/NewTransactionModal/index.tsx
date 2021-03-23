@@ -5,7 +5,7 @@ import closeImg from '../../assets/close.svg';
 import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 import { FormEvent, useState } from 'react';
-import { api } from '../../services/api';
+import { useTransactions } from '../../contexts/TransactionsContext';
 
 interface NewTransactionModalProps {
     isOpen: boolean;
@@ -13,18 +13,20 @@ interface NewTransactionModalProps {
 }
 
 interface FormDataProps {
-    titulo: string;
-    valor: number;
+    title: string;
+    amount: number;
     type: 'deposit' | 'withdraw';
-    categoria: string;
+    category: string;
 }
 
 export const NewTransactionModal = ({ isOpen, onRequestClose }: NewTransactionModalProps) => {
     const [formData, setFormData] = useState<FormDataProps>({} as FormDataProps);
-    const handleCreateNewTransaction = (e: FormEvent) => {
-        e.preventDefault();
-        
-        api.post('transactions', formData);
+    const { addNewTransaction } = useTransactions();
+
+    const handleSubmit = async (e: FormEvent) => { 
+        e.preventDefault(); 
+        await addNewTransaction(formData); 
+        onRequestClose();
     }
 
     return (
@@ -40,16 +42,16 @@ export const NewTransactionModal = ({ isOpen, onRequestClose }: NewTransactionMo
                 onClick={onRequestClose}>
                 <img src={closeImg} alt="Fechar modal" />
             </button>
-            <Container onSubmit={handleCreateNewTransaction}>
+            <Container onSubmit={handleSubmit}>
                 <h2>Cadastrar Transação</h2>
                 <input
                     placeholder="Título"
-                    onChange={(e) => setFormData({ ...formData, titulo: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 />
                 <input
                     type="number"
                     placeholder="Valor"
-                    onChange={(e) => setFormData({ ...formData, valor: Number(e.target.value) })}
+                    onChange={(e) => setFormData({ ...formData, amount: Number(e.target.value) })}
                 />
 
                 <TransactionTypeContainer>
@@ -75,7 +77,7 @@ export const NewTransactionModal = ({ isOpen, onRequestClose }: NewTransactionMo
 
                 <input
                     placeholder="Categoria"
-                    onChange={(e) => setFormData({ ...formData, categoria: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 />
                 <button type="submit">Cadastrar</button>
             </Container>
