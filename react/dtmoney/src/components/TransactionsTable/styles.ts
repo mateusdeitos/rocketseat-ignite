@@ -11,8 +11,18 @@ export const Container = styled.div`
             color: var(--text-body);
             font-weight: 400;
             padding: 1rem 2rem; 
-            text-align: left;
+            text-align: center;
             line-height: 1.5rem;
+        }
+
+        .align-left {
+            text-align: left;
+        }
+        .align-center {
+            text-align: center;
+        }
+        .align-right {
+            text-align: right;
         }
 
         td {
@@ -24,6 +34,10 @@ export const Container = styled.div`
 
             &:first-child {
                 color: var(--text);
+            }
+
+            &.deposit, &.withdraw {
+                text-align: right;
             }
 
             &.deposit {
