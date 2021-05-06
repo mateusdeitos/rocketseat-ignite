@@ -1,16 +1,13 @@
 import { Category } from "../model/Category";
+import { ICategoriesRepository, ICreateCategoryDTO } from "./ICategoriesRepository";
 
-type ICreateCategoryDTO = {
-	name: string;
-	description: string;
-}
 
-export class CategoriesRepository {
+export class CategoriesRepository implements ICategoriesRepository {
 	private categories: Category[];
 
 	constructor() { this.categories = [] }
 
-	create({ description, name }: ICreateCategoryDTO): void {
+	public async create({ description, name }: ICreateCategoryDTO): Promise<void> {
 		const category = new Category();
 		Object.assign(category, {
 			name,
@@ -19,11 +16,11 @@ export class CategoriesRepository {
 		this.categories.push(category);
 	}
 
-	list(): Category[] {
+	public async list(): Promise<Category[]> {
 		return this.categories;
 	}
 
-	findByProp(prop: keyof ICreateCategoryDTO, value: ICreateCategoryDTO[keyof ICreateCategoryDTO]) {
+	public async findByProp(prop: keyof ICreateCategoryDTO, value: ICreateCategoryDTO[keyof ICreateCategoryDTO]): Promise<Category | undefined> {
 		return this.categories.find(cat => cat[prop] === value);
 	}
 }
