@@ -1,11 +1,21 @@
-import { Category } from "../model/Category";
-import { ICategoriesRepository, ICreateCategoryDTO } from "./ICategoriesRepository";
+import { Category } from "../../model/Category";
+import { ICategoriesRepository, ICreateCategoryDTO } from "../ICategoriesRepository";
 
 
 export class CategoriesRepository implements ICategoriesRepository {
 	private categories: Category[];
+	private static INSTANCE: CategoriesRepository;
 
-	constructor() { this.categories = [] }
+	private constructor() { this.categories = [] }
+
+	// Útil para ter apenas 1 instância da classe, padrão singleton
+	public static getInstance(): CategoriesRepository {
+		if (!CategoriesRepository.INSTANCE) {
+			CategoriesRepository.INSTANCE = new CategoriesRepository();
+		}
+
+		return CategoriesRepository.INSTANCE;
+	}
 
 	public async create({ description, name }: ICreateCategoryDTO): Promise<void> {
 		const category = new Category();

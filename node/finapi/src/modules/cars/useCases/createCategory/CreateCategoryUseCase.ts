@@ -1,6 +1,6 @@
-import { ICategoriesRepository, ICreateCategoryDTO } from "../repositories/ICategoriesRepository";
+import { ICategoriesRepository, ICreateCategoryDTO } from "../../repositories/ICategoriesRepository";
 
-export class CreateCategoryService {
+export class CreateCategoryUseCase {
 	constructor(
 		private categoriesRepository: ICategoriesRepository
 	) {}

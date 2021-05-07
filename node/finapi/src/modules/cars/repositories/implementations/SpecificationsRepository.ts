@@ -1,11 +1,20 @@
-import { Specification } from "../model/Specification";
-import { ICreateSpecificationDTO, ISpecificationsRepository } from "./ISpecificationsRepository";
+import { Specification } from "../../model/Specification";
+import { ICreateSpecificationDTO, ISpecificationsRepository } from "../ISpecificationsRepository";
 
 
 export class SpecificationsRepository implements ISpecificationsRepository {
 	private specifications: Specification[];
+	private static INSTANCE: SpecificationsRepository;
+	private constructor() { this.specifications = [] }
 
-	constructor() { this.specifications = [] }
+	// Útil para ter apenas 1 instância da classe, padrão singleton
+	public static getInstance(): SpecificationsRepository {
+		if (!SpecificationsRepository.INSTANCE) {
+			SpecificationsRepository.INSTANCE = new SpecificationsRepository();
+		}
+
+		return SpecificationsRepository.INSTANCE;
+	}
 
 	public async create({ description, name }: ICreateSpecificationDTO): Promise<void> {
 		const specification = new Specification();

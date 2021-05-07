@@ -1,20 +1,14 @@
 import { Router } from 'express';
-import { ICreateSpecificationDTO } from '../modules/cars/repositories/ISpecificationsRepository';
-import { SpecificationsRepository } from '../modules/cars/repositories/SpecificationsRepository';
-import { CreateSpecificationService } from '../modules/cars/services/CreateSpecificationService';
+import { createSpecificationController } from '../modules/cars/useCases/createSpecification.ts';
+import { listSpecificationsController } from '../modules/cars/useCases/listSpecifications';
 
 export const specificationsRoutes = Router();
-const specificationsRepository = new SpecificationsRepository();
 
 specificationsRoutes.get('/specifications', async (request, response) => {
-	const specifications = await specificationsRepository.list();
-	return response.json(specifications);
+	return listSpecificationsController.handle(request, response);
 })
 
 specificationsRoutes.post('/specifications', async (request, response) => {
-	const { name, description } = request.body as ICreateSpecificationDTO;
-	const createSpecificationService = new CreateSpecificationService(specificationsRepository);
-	await createSpecificationService.execute({ name, description });
-	return response.status(201).send();
+	return createSpecificationController.handle(request, response);
 })
 
