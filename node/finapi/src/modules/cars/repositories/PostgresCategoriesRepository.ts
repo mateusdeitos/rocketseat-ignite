@@ -3,7 +3,7 @@ import { ICategoriesRepository, ICreateCategoryDTO } from "./ICategoriesReposito
 
 
 export class PostgresCategoriesRepository implements ICategoriesRepository {
-	public async findByProp(prop: keyof ICreateCategoryDTO, value: string): Promise<Category> {
+	public async findByProp(prop: keyof Category, value: Category[keyof Category]): Promise<Category> {
 		throw new Error("Method not implemented.");
 	}
 	public async create(data: ICreateCategoryDTO): Promise<void> {

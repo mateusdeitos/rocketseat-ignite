@@ -20,7 +20,7 @@ export class CategoriesRepository implements ICategoriesRepository {
 		return this.categories;
 	}
 
-	public async findByProp(prop: keyof ICreateCategoryDTO, value: ICreateCategoryDTO[keyof ICreateCategoryDTO]): Promise<Category | undefined> {
+	public async findByProp(prop: keyof Category, value: Category[keyof Category]): Promise<Category | undefined> {
 		return this.categories.find(cat => cat[prop] === value);
 	}
 }
