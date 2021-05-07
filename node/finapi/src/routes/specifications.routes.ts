@@ -4,11 +4,11 @@ import { listSpecificationsController } from '../modules/cars/useCases/listSpeci
 
 export const specificationsRoutes = Router();
 
-specificationsRoutes.get('/specifications', async (request, response) => {
+specificationsRoutes.get('/', async (request, response) => {
 	return listSpecificationsController.handle(request, response);
 })
 
-specificationsRoutes.post('/specifications', async (request, response) => {
+specificationsRoutes.post('/', async (request, response) => {
 	return createSpecificationController.handle(request, response);
 })
 

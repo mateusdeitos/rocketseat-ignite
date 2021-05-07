@@ -4,11 +4,11 @@ import { listCategoriesController } from '../modules/cars/useCases/listCategorie
 
 export const categoriesRoutes = Router();
 
-categoriesRoutes.get('/categories', async (request, response) => {
+categoriesRoutes.get('/', async (request, response) => {
 	return listCategoriesController.handle(request, response);
 })
 
-categoriesRoutes.post('/categories', async (request, response) => {
+categoriesRoutes.post('/', async (request, response) => {
 	return createCategoryController.handle(request, response);
 })
 
