@@ -18,6 +18,5 @@ export class Category {
 
 	constructor() {
 		if (!this.id) this.id = uuid();
-		if (!this.created_at) this.created_at = new Date();
 	}
 }

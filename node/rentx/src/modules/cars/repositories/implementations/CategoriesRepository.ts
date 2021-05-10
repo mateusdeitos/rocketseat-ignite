@@ -1,36 +1,26 @@
+import { getRepository, Repository } from "typeorm";
 import { Category } from "../../entities/Category";
 import { ICategoriesRepository, ICreateCategoryDTO } from "../ICategoriesRepository";
 
 
 export class CategoriesRepository implements ICategoriesRepository {
-	private categories: Category[];
-	private static INSTANCE: CategoriesRepository;
+	private repository: Repository<Category>;
 
-	private constructor() { this.categories = [] }
-
-	// Útil para ter apenas 1 instância da classe, padrão singleton
-	public static getInstance(): CategoriesRepository {
-		if (!CategoriesRepository.INSTANCE) {
-			CategoriesRepository.INSTANCE = new CategoriesRepository();
-		}
-
-		return CategoriesRepository.INSTANCE;
+	constructor() {
+		this.repository = getRepository(Category)
 	}
 
 	public async create({ description, name }: ICreateCategoryDTO): Promise<void> {
-		const category = new Category();
-		Object.assign(category, {
-			name,
-			description
-		})
-		this.categories.push(category);
+		const category = this.repository.create({ description, name });
+		await this.repository.save(category);
 	}
 
 	public async list(): Promise<Category[]> {
-		return this.categories;
+		const categories = await this.repository.find();
+		return categories;
 	}
 
 	public async findByProp(prop: keyof Category, value: Category[keyof Category]): Promise<Category | undefined> {
-		return this.categories.find(cat => cat[prop] === value);
+		return this.repository.findOne({ where: { [prop]: value } });
 	}
 }
