@@ -1,3 +1,4 @@
+import { specificationsSchema } from "./schemas/specification";
 
 export default function () {
 	return {
@@ -56,6 +57,52 @@ export default function () {
 									}
 								}
 							}
+						}
+					}
+				}
+			},
+			"/categories/import": {
+				post: {
+					tags: ["Category"],
+					summary: "Upload new categories",
+					description: "Upload new categories",
+					requestBody: {
+						content: {
+							"multipart/form-data": {
+								schema: {
+									type: "object",
+									properties: {
+										file: { type: "string", format: "binary" }
+									}
+								}
+							}
+						}
+					},
+					responses: {
+						201: { description: "Created" }
+					}
+				}
+			},
+			"/specifications": {
+				post: {
+					tags: ["Specifications"],
+					summary: "Create a specification",
+					description: "Create a new specification",
+					requestBody: {
+						content: {
+							"application/json": {
+								schema: {
+									...specificationsSchema.requestBody()
+								}
+							}
+						}
+					},
+					responses: {
+						201: {
+							description: "Created",
+						},
+						500: {
+							description: "Specification already exists"
 						}
 					}
 				}
