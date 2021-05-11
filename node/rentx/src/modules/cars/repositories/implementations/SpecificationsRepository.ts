@@ -1,35 +1,24 @@
+import { getRepository, Repository } from "typeorm";
 import { Specification } from "../../entities/Specification";
 import { ICreateSpecificationDTO, ISpecificationsRepository } from "../ISpecificationsRepository";
 
 
 export class SpecificationsRepository implements ISpecificationsRepository {
-	private specifications: Specification[];
-	private static INSTANCE: SpecificationsRepository;
-	private constructor() { this.specifications = [] }
-
-	// Útil para ter apenas 1 instância da classe, padrão singleton
-	public static getInstance(): SpecificationsRepository {
-		if (!SpecificationsRepository.INSTANCE) {
-			SpecificationsRepository.INSTANCE = new SpecificationsRepository();
-		}
-
-		return SpecificationsRepository.INSTANCE;
+	private repository: Repository<Specification>;
+	constructor() {
+		this.repository = getRepository(Specification);
 	}
 
 	public async create({ description, name }: ICreateSpecificationDTO): Promise<void> {
-		const specification = new Specification();
-		Object.assign(specification, {
-			name,
-			description
-		})
-		this.specifications.push(specification);
+		const specification = this.repository.create({ description, name });
+		this.repository.save(specification);
 	}
 
 	public async list(): Promise<Specification[]> {
-		return this.specifications;
+		return this.repository.find();
 	}
 
 	public async findByProp(prop: keyof Specification, value: Specification[keyof Specification]): Promise<Specification | undefined> {
-		return this.specifications.find(cat => cat[prop] === value);
+		return this.repository.findOne({ where: { [prop]: value } });
 	}
 }

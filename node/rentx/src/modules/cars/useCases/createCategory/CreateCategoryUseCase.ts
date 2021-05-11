@@ -1,7 +1,11 @@
+import { inject, injectable } from "tsyringe";
 import { ICategoriesRepository, ICreateCategoryDTO } from "../../repositories/ICategoriesRepository";
+import { TOKEN_CATEGORY_REPOSITORY } from '../../../../shared/container/index';
 
+@injectable()
 export class CreateCategoryUseCase {
 	constructor(
+		@inject(TOKEN_CATEGORY_REPOSITORY)
 		private categoriesRepository: ICategoriesRepository
 	) {}
 
