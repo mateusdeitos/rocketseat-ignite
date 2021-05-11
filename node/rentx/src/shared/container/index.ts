@@ -3,6 +3,8 @@ import { ICategoriesRepository } from '../../modules/cars/repositories/ICategori
 import { CategoriesRepository } from '../../modules/cars/repositories/implementations/CategoriesRepository';
 import { SpecificationsRepository } from '../../modules/cars/repositories/implementations/SpecificationsRepository';
 import { ISpecificationsRepository } from '../../modules/cars/repositories/ISpecificationsRepository';
+import { UsersRepository } from '../../modules/users/repositories/implementations/UsersRepository';
+import { IUsersRepository } from '../../modules/users/repositories/IUsersRepository';
 
 export const TOKEN_CATEGORY_REPOSITORY = 'CategoriesRepository';
 container.registerSingleton<ICategoriesRepository>(
@@ -13,4 +15,9 @@ export const TOKEN_SPECIFICATION_REPOSITORY = 'SpecificationsRepository';
 container.registerSingleton<ISpecificationsRepository>(
 	TOKEN_SPECIFICATION_REPOSITORY,
 	SpecificationsRepository
+)
+export const TOKEN_USERS_REPOSITORY = 'UsersRepository';
+container.registerSingleton<IUsersRepository>(
+	TOKEN_USERS_REPOSITORY,
+	UsersRepository
 )
