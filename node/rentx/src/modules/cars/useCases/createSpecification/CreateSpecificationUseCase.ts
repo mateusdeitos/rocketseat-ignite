@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { AppError } from "../../../../errors/AppError";
 import { TOKEN_SPECIFICATION_REPOSITORY } from "../../../../shared/container";
 import { ICreateSpecificationDTO, ISpecificationsRepository } from "../../repositories/ISpecificationsRepository";
 
@@ -13,7 +14,7 @@ export class CreateSpecificationUseCase {
 		const specificationExists = await this.specificationsRepository.findByProp('name', name);
 
 		if (specificationExists) {
-			throw new Error("Category already exists!");
+			throw new AppError("Category already exists!");
 		}
 
 		await this.specificationsRepository.create({ name, description });

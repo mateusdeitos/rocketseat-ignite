@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { ICategoriesRepository, ICreateCategoryDTO } from "../../repositories/ICategoriesRepository";
 import { TOKEN_CATEGORY_REPOSITORY } from '../../../../shared/container/index';
+import { AppError } from "../../../../errors/AppError";
 
 @injectable()
 export class CreateCategoryUseCase {
@@ -13,7 +14,7 @@ export class CreateCategoryUseCase {
 		const categoryExists = await this.categoriesRepository.findByProp('name', name);
 
 		if (categoryExists) {
-			throw new Error("Category already exists!");
+			throw new AppError("Category already exists!");
 		}
 
 		await this.categoriesRepository.create({ name, description });
