@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { TOKEN_SPECIFICATION_REPOSITORY } from "../../../../shared/container";
-import { Specification } from "../../entities/Specification";
+import { Specification } from "../../infra/typeorm/entities/Specification";
 import { ISpecificationsRepository } from "../../repositories/ISpecificationsRepository";
 @injectable()
 export class ListSpecificationsUseCase {

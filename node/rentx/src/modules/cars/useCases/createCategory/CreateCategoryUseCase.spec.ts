@@ -1,7 +1,7 @@
 import { FakeCategoriesRepository } from "../../repositories/fakes/FakeCategoriesRepository"
 import { CreateCategoryUseCase } from "./CreateCategoryUseCase";
 import { validate } from 'uuid'
-import { AppError } from "@errors/AppError";
+import { AppError } from "@shared/errors/AppError";
 
 describe('Create Category', () => {
 	let fakeCategoriesRepository: FakeCategoriesRepository;

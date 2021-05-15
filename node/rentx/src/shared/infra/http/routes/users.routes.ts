@@ -6,4 +6,3 @@ const createUserController = new CreateUserController();
 
 usersRoutes.post('/', createUserController.handle);
 
-

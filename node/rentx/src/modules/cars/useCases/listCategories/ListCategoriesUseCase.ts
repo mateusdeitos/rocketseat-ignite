@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { TOKEN_CATEGORY_REPOSITORY } from "../../../../shared/container";
-import { Category } from "../../entities/Category";
+import { Category } from "../../infra/typeorm/entities/Category";
 import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 @injectable()
 export class ListCategoriesUseCase {

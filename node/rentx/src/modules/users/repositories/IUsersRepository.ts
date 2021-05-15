@@ -1,4 +1,4 @@
-import { User } from "../entities/User";
+import { User } from "../infra/typeorm/entities/User";
 
 export type ICreateUserDTO = Pick<User, 'name' | 'password' | 'driver_license' | 'email'>
 
