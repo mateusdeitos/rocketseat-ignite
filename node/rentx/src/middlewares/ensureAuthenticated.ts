@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express"
 import { decode, verify } from "jsonwebtoken";
-import { AppError } from "../errors/AppError";
-import { UsersRepository } from "../modules/users/repositories/implementations/UsersRepository";
+import { AppError } from "@errors/AppError";
+import { UsersRepository } from "@modules/users/repositories/implementations/UsersRepository";
 
 export const ensureAuthenticated = async (request: Request, response: Response, next: NextFunction) => {
 	const { authorization } = request.headers;

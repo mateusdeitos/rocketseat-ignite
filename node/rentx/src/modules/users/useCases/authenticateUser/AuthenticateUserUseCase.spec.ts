@@ -1,5 +1,4 @@
-import { AppError } from "../../../../errors/AppError";
-import { User } from "../../entities/User";
+import { AppError } from "@errors/AppError";
 import { FakeUsersRepository } from "../../repositories/fakes/FakeUsersRepository"
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
