@@ -10,7 +10,7 @@ export class ListCarsUseCase {
 		private carsRepository: ICarsRepository
 	){}
 
-	async execute(): Promise<Car[]> {
-		return this.carsRepository.list();
+	async execute(pesquisa: string): Promise<Car[]> {
+		return this.carsRepository.list(pesquisa);
 	}
 }

@@ -1,5 +1,5 @@
 import { ICarsRepository, ICreateCarDTO } from "@modules/cars/repositories/ICarsRepository";
-import { getRepository, Repository } from "typeorm";
+import { Brackets, getRepository, Repository } from "typeorm";
 import { Car } from "../entities/Car";
 import { Category } from "../entities/Category";
 
@@ -17,8 +17,21 @@ export class CarsRepository implements ICarsRepository {
 		const car = this.repository.create({ ...data, available: true });
 		return this.repository.save(car);
 	}
-	list(): Promise<Car[]> {
-		return this.repository.find();
+	async list(pesquisa?: string): Promise<Car[]> {
+		if (!pesquisa) {
+			return this.repository.find();
+		}
+
+		return this.repository
+			.createQueryBuilder('cars')
+			.innerJoin('cars.category', 'category')
+			.where(new Brackets(sql => {
+				sql
+					.where('cars.name like :name', { name: `%${pesquisa}%` })
+					.orWhere('cars.description like :description', { description: `%${pesquisa}%` })
+					.orWhere('category.name like :categoryName', { categoryName: `%${pesquisa}%` })
+			}))
+			.getMany()
 	}
 
 }
