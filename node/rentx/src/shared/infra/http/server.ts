@@ -4,11 +4,12 @@ import "express-async-errors";
 import { routes } from '@shared/infra/http/routes';
 import swaggerUI from 'swagger-ui-express';
 import swaggerFactory from '../../../docs/swagger';
-import "@shared/infra/typeorm/database";
+import createConnection from "@shared/infra/typeorm/database";
 import '@shared/container'
 import { handleErrors } from "./middlewares/handleErrors";
 
 const app = express();
+createConnection();
 app.use(express.json());
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerFactory()))
