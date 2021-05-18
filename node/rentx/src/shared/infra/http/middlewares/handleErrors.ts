@@ -3,6 +3,7 @@ import { AppError } from "@shared/errors/AppError";
 
 
 export const handleErrors = async (error: Error, request: Request, response: Response, _: NextFunction) => {
+	console.log(error);
 	if (error instanceof AppError) {
 		return response.status(error.statusCode).json({ message: error.message });
 	}

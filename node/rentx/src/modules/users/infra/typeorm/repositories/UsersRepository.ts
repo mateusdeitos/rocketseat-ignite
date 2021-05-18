@@ -16,4 +16,8 @@ export class UsersRepository implements IUsersRepository {
 		return this.repository.findOne({ where: { [prop]: value } });
 	}
 
+	public async updateProp(id: string, prop: keyof User, value: User[keyof User]): Promise<void> {
+		await this.repository.update(id, { [prop]: value });
+	}
+
 }

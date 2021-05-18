@@ -32,4 +32,14 @@ export class FakeUsersRepository implements IUsersRepository {
 		this.categories.push(user);
 	}
 
+	async updateProp(id: string, prop: keyof User, value: User[keyof User]): Promise<void> {
+		const index = this.categories.findIndex(u => u.id === id);
+		if (index >= 0) {
+			this.categories[index] = {
+				...this.categories[index],
+				[prop]: value,
+			}
+		}
+	}
+
 }
