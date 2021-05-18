@@ -1,4 +1,4 @@
-import { ICarsRepository, ICreateCarDTO } from "@modules/cars/repositories/ICarsRepository";
+import { ICarsRepository, ICreateCarDTO, ISearchFilters } from "@modules/cars/repositories/ICarsRepository";
 import { Brackets, getRepository, Repository } from "typeorm";
 import { Car } from "../entities/Car";
 import { Category } from "../entities/Category";
@@ -17,9 +17,9 @@ export class CarsRepository implements ICarsRepository {
 		const car = this.repository.create({ ...data, available: true });
 		return this.repository.save(car);
 	}
-	async list(pesquisa?: string): Promise<Car[]> {
+	async list({ limit: take, offset: skip, q: pesquisa }: ISearchFilters): Promise<Car[]> {
 		if (!pesquisa) {
-			return this.repository.find();
+			return this.repository.find({ skip, take });
 		}
 
 		return this.repository
@@ -31,6 +31,8 @@ export class CarsRepository implements ICarsRepository {
 					.orWhere('cars.description like :description', { description: `%${pesquisa}%` })
 					.orWhere('category.name like :categoryName', { categoryName: `%${pesquisa}%` })
 			}))
+			.skip(skip)
+			.take(take)
 			.getMany()
 	}
 
