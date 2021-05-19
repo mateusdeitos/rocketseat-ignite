@@ -1,7 +1,8 @@
 
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryColumn } from 'typeorm';
 import { v4 as uuid } from 'uuid';
 import { Category } from './Category';
+import { Specification } from './Specification';
 
 @Entity('cars')
 export class Car {
@@ -35,6 +36,14 @@ export class Car {
 	@ManyToOne(() => Category)
 	@JoinColumn({ name: 'category_id', referencedColumnName: 'id' })
 	category: Category;
+
+	@ManyToMany(() => Specification)
+	@JoinTable({
+		name: 'specifications_cars',
+		joinColumn: { name: 'car_id' }, // nome da coluna na tabela N-N que referencia o id do car
+		inverseJoinColumn: { name: 'specification_id' } // chave da tabela de specifications
+	})
+	specifications: Specification[];
 
 	@CreateDateColumn()
 	created_at?: Date;

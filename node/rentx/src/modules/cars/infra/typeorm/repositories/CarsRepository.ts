@@ -19,7 +19,7 @@ export class CarsRepository implements ICarsRepository {
 	}
 	async list({ limit: take, offset: skip, q: pesquisa }: ISearchFilters): Promise<Car[]> {
 		if (!pesquisa) {
-			return this.repository.find({ skip, take });
+			return this.repository.find({ skip, take, relations: ['specifications'] });
 		}
 
 		return this.repository

@@ -21,4 +21,8 @@ export class SpecificationsRepository implements ISpecificationsRepository {
 	public async findByProp(prop: keyof Specification, value: Specification[keyof Specification]): Promise<Specification | undefined> {
 		return this.repository.findOne({ where: { [prop]: value } });
 	}
+
+	public async findByIds(ids: string[]): Promise<Specification[]> {
+		return this.repository.findByIds(ids);
+	}
 }
