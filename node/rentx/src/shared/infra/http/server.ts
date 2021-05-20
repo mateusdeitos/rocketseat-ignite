@@ -17,4 +17,4 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerFactory()))
 
 app.use(routes);
 app.use(handleErrors);
-app.listen(3333, () => console.log('server rodando 🚀'));
+app.listen(process.env.NODE_ENV === 'local' ? 4444 : 3333, () => console.log('server rodando 🚀', process.env.NODE_ENV));
