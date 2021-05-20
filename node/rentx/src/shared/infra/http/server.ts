@@ -9,7 +9,7 @@ import createConnection from "@shared/infra/typeorm/database";
 import '@shared/container'
 import { handleErrors } from "./middlewares/handleErrors";
 
-const app = express();
+export const app = express();
 createConnection();
 app.use(express.json());
 

@@ -2,9 +2,10 @@
 import { hash } from 'bcrypt';
 import createConnection from '../database'
 import { v4 } from 'uuid';
+import { Connection } from 'typeorm';
 
-const create = async () => {
-	const conn = await createConnection('localhost');
+export const createUserAdmin = async (_conn?: Connection, keepOpen = false) => {
+	const conn = _conn ? _conn : await createConnection();
 	const id = v4();
 	const password = await hash("admin", 8);
 	await conn.query(
@@ -12,7 +13,9 @@ const create = async () => {
 		VALUES('${id}', 'admin', 'admin@rentx.com.br', '${password}', true, '99999999')`
 	);
 
-	await conn.close();
+	if (!keepOpen) {
+		await conn.close();
+	}
 }
 
-create().then(() => console.log('User admin created!'));
+createUserAdmin().then(() => console.log('User admin created!'));
