@@ -24,6 +24,9 @@ export class RentalsRepository implements IRentalsRepository {
 	public async findOpenRentalByUser(user_id: string): Promise<Rental | undefined> {
 		return this.repository.findOne({ where: { user_id, end_date: IsNull() } })
 	}
+	public async findRentalByUser(user_id: string): Promise<Rental[]> {
+		return this.repository.find({ where: { user_id } })
+	}
 	public async updateProp(id: string, prop: keyof Rental, value: Rental[keyof Rental]): Promise<void> {
 		await this.repository.update(id, { [prop]: value });
 	}
