@@ -1,10 +1,10 @@
 import { TOKEN_CARS_REPOSITORY, TOKEN_RENTALS_REPOSITORY } from "@shared/container";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
-import { ICreateRentalDTO, IRentalsRepository } from "../repositories/IRentalsRepository";
+import { ICreateRentalDTO, IRentalsRepository } from "../../repositories/IRentalsRepository";
 import { TOKEN_DATE_PROVIDER } from "@shared/providers";
-import { IDateProvider } from '../../../shared/providers/DateProvider/IDateProvider';
-import { Rental } from '../infra/typeorm/entities/Rental';
+import { IDateProvider } from '../../../../shared/providers/DateProvider/IDateProvider';
+import { Rental } from '../../infra/typeorm/entities/Rental';
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 
 @injectable()

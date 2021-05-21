@@ -1,4 +1,6 @@
+import { Car } from "@modules/cars/infra/typeorm/entities/Car";
 import { ICreateRentalDTO, IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
+import { User } from "@modules/users/infra/typeorm/entities/User";
 import { getRepository, IsNull, Repository } from "typeorm";
 import { Rental } from "./entities/Rental";
 
@@ -21,6 +23,9 @@ export class RentalsRepository implements IRentalsRepository {
 	}
 	public async findOpenRentalByUser(user_id: string): Promise<Rental | undefined> {
 		return this.repository.findOne({ where: { user_id, end_date: IsNull() } })
+	}
+	public async updateProp(id: string, prop: keyof Rental, value: Rental[keyof Rental]): Promise<void> {
+		await this.repository.update(id, { [prop]: value });
 	}
 
 }
