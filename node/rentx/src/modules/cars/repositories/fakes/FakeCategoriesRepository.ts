@@ -22,7 +22,7 @@ export class FakeCategoriesRepository implements ICategoriesRepository {
 		return this.categories;
 	}
 
-	async findByProp(prop: keyof Category, value: Category[keyof Category]): Promise<Category  | undefined> {
+	async findByProp(prop: keyof Category, value: Category[keyof Category]): Promise<Category | undefined> {
 		return this.categories.find(c => c[prop] === value);
 	}
 
@@ -32,4 +32,13 @@ export class FakeCategoriesRepository implements ICategoriesRepository {
 		this.categories.push(category);
 	}
 
+	async updateProp(id: string, prop: keyof Category, value: Category[keyof Category]): Promise<void> {
+		const index = this.categories.findIndex(c => c.id === id);
+		if (index >= 0) {
+			this.categories[index] = {
+				...this.categories[index],
+				[prop]: value
+			}
+		}
+	}
 }

@@ -1,11 +1,11 @@
-import { TOKEN_RENTALS_REPOSITORY } from "@shared/container";
+import { TOKEN_CARS_REPOSITORY, TOKEN_RENTALS_REPOSITORY } from "@shared/container";
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { ICreateRentalDTO, IRentalsRepository } from "../repositories/IRentalsRepository";
-import dayjs from 'dayjs';
 import { TOKEN_DATE_PROVIDER } from "@shared/providers";
 import { IDateProvider } from '../../../shared/providers/DateProvider/IDateProvider';
 import { Rental } from '../infra/typeorm/entities/Rental';
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 
 @injectable()
 export class CreateRentalsUseCase {
@@ -14,7 +14,9 @@ export class CreateRentalsUseCase {
 		@inject(TOKEN_RENTALS_REPOSITORY)
 		private rentalsRepository: IRentalsRepository,
 		@inject(TOKEN_DATE_PROVIDER)
-		private dateProvider: IDateProvider
+		private dateProvider: IDateProvider,
+		@inject(TOKEN_CARS_REPOSITORY)
+		private carsRepository: ICarsRepository
 	) { }
 
 	async execute({ car_id, user_id, expected_return_date }: ICreateRentalDTO): Promise<Rental> {
@@ -37,6 +39,7 @@ export class CreateRentalsUseCase {
 			throw new AppError("Invalid return time!")
 		}
 
+		await this.carsRepository.updateProp(car_id, 'available', false);
 
 		return this.rentalsRepository.create({ car_id, user_id, expected_return_date });
 	}

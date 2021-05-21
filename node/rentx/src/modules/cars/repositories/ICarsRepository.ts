@@ -1,3 +1,4 @@
+import { IBaseRepository } from "@shared/repositories/IBaseRepository";
 import { Car } from "../infra/typeorm/entities/Car";
 
 export type ICreateCarDTO = Omit<Car, 'id' | 'created_at' | 'available'>
@@ -7,8 +8,7 @@ export interface ISearchFilters {
 	limit?: number;
 	offset?: number;
 }
-export interface ICarsRepository {
-	findByProp(prop: keyof Car, value: Car[keyof Car]): Promise<Car | undefined>;
+export interface ICarsRepository extends IBaseRepository<Car> {
 	create(data: ICreateCarDTO): Promise<Car>;
 	list(filters?: ISearchFilters): Promise<Car[]>;
 }

@@ -1,3 +1,4 @@
+import { IBaseRepository } from "@shared/repositories/IBaseRepository";
 import { Category } from "../infra/typeorm/entities/Category";
 
 export type ICreateCategoryDTO = {
@@ -5,8 +6,7 @@ export type ICreateCategoryDTO = {
 	description: string;
 }
 
-export interface ICategoriesRepository {
-	findByProp(prop: keyof Category, value: Category[keyof Category]): Promise<Category | undefined>;
+export interface ICategoriesRepository extends IBaseRepository<Category> {
 	create(data: ICreateCategoryDTO): Promise<void>;
 	list(): Promise<Category[]>;
 }

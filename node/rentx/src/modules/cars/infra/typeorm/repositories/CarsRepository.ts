@@ -36,4 +36,7 @@ export class CarsRepository implements ICarsRepository {
 			.getMany()
 	}
 
+	async updateProp(id: string, prop: keyof Car, value: Car[keyof Car]): Promise<void> {
+		await this.repository.update(id, { [prop]: value });
+	}
 }
