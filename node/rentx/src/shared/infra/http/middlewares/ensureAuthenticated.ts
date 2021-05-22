@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express"
 import { decode, verify } from "jsonwebtoken";
 import { AppError } from "@shared/errors/AppError";
 import { UsersRepository } from "@modules/users/infra/typeorm/repositories/UsersRepository";
+import { authConfig } from "@config/auth";
 
 export const ensureAuthenticated = async (request: Request, response: Response, next: NextFunction) => {
 	const { authorization } = request.headers;
@@ -13,7 +14,7 @@ export const ensureAuthenticated = async (request: Request, response: Response, 
 	const [, token] = authorization.split(" ");
 
 	try {
-		verify(token, 'aehehauehuahuae');
+		verify(token, authConfig.secret.token);
 		const { sub: id } = decode(token);
 		const usersRepository = new UsersRepository();
 		const user = await usersRepository.findByProp('id', id);

@@ -23,8 +23,11 @@ services:
             - .:/usr/app
         links:
             - database_main
-        depends_on: 
+        depends_on:
             - database_main
+        environment:
+            - TZ=America/Sao_Paulo
+
 
 volumes:
     pgdata:

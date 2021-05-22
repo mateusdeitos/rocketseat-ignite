@@ -9,6 +9,9 @@ export class CategoriesRepository implements ICategoriesRepository {
 	constructor() {
 		this.repository = getRepository(Category)
 	}
+	async updateProp(id: string, prop: keyof Category, value: string | Date): Promise<void> {
+		await this.repository.update(id, { [prop]: value });
+	}
 
 	public async create({ description, name }: ICreateCategoryDTO): Promise<void> {
 		const category = this.repository.create({ description, name });
