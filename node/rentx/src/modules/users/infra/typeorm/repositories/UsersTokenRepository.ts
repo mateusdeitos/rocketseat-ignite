@@ -20,5 +20,11 @@ export class UsersTokenRepository implements IUsersTokenRepository {
 	async updateProp(id: string, prop: keyof UserToken, value: string | User | Date): Promise<void> {
 		await this.repository.update(id, { [prop]: value });
 	}
+	async findAllByProp(prop: keyof UserToken, value: UserToken[keyof UserToken]): Promise<UserToken[]> {
+		return this.repository.find({ where: { [prop]: value } });
+	}
+	async deleteById(id: string) {
+		await this.repository.delete(id);
+	}
 
 }

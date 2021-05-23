@@ -9,4 +9,5 @@ export interface ICreateUserTokenDTO {
 
 export interface IUsersTokenRepository extends IBaseRepository<UserToken>{
 	create(data: ICreateUserTokenDTO): Promise<UserToken>;
+	deleteById(id: string): Promise<void>;
 }
