@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import "dotenv";
+import "dotenv/config";
 import express from 'express';
 import "express-async-errors";
 import { routes } from '@shared/infra/http/routes';
