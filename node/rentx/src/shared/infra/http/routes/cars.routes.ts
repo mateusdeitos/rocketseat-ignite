@@ -6,12 +6,11 @@ import { ensureAdmin } from '../middlewares/ensureAdmin';
 import { CreateCarSpecificationController } from '@modules/cars/useCases/createCarSpecification/createCarSpecificationController';
 import { UploadCarImageController } from '@modules/cars/useCases/uploadCarImage/uploadCarImageController';
 import multer from 'multer';
-import path from 'path';
 import { upload } from '@config/upload';
 
 export const carsRoutes = Router();
 
-const uploadConfig = multer(upload(path.resolve('tmp', 'cars')))
+const uploadConfig = multer(upload)
 
 const createCarController = new CreateCarController();
 const createCarSpecificationController = new CreateCarSpecificationController();

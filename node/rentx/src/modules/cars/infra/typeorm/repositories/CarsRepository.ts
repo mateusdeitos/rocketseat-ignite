@@ -19,12 +19,14 @@ export class CarsRepository implements ICarsRepository {
 	}
 	async list({ limit: take, offset: skip, q: pesquisa }: ISearchFilters): Promise<Car[]> {
 		if (!pesquisa) {
-			return this.repository.find({ skip, take, relations: ['specifications'] });
+			return this.repository.find({ skip, take, relations: ['specifications', 'category', 'images'] });
 		}
 
 		return this.repository
 			.createQueryBuilder('cars')
-			.innerJoin('cars.category', 'category')
+			.innerJoinAndSelect('cars.category', 'category')
+			.leftJoinAndSelect('cars.images', 'images')
+			.leftJoinAndSelect('cars.specifications', 'specifications')
 			.where(new Brackets(sql => {
 				sql
 					.where('cars.name like :name', { name: `%${pesquisa}%` })
