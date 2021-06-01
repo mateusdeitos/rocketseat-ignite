@@ -2,6 +2,7 @@ import { User } from "../infra/typeorm/entities/User";
 
 export type ICreateUserDTO = Pick<User, 'name' | 'password' | 'driver_license' | 'email'>
 
+export type IProfileDTO = Pick<User, 'id' | 'name' | 'driver_license' | 'email' | 'avatar_url'>;
 export interface IUsersRepository {
 	create(data: ICreateUserDTO): Promise<void>;
 	findByProp(prop: keyof User, value: User[keyof User]): Promise<User | undefined>;

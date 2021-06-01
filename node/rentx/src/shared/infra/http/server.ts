@@ -8,11 +8,14 @@ import swaggerFactory from '../../../docs/swagger';
 import createConnection from "@shared/infra/typeorm/database";
 import '@shared/container'
 import { handleErrors } from "./middlewares/handleErrors";
+import { upload } from "@config/upload";
 
 export const app = express();
 createConnection();
 app.use(express.json());
 
+app.use('/avatar', express.static(`${upload.tmpFolder}/avatar`))
+app.use('/cars', express.static(`${upload.tmpFolder}/cars`))
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerFactory()))
 
 app.use(routes);
